@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <title>Regions</title>
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+          <span class="navbar-brand mb-0 h1">Region Information</span>
+    </nav>
+<br>
+<br>
+<form action="{% url 'municipalities:add_region' %}" method="post">
+{% csrf_token %}
+  <div class="form-group row">
+      <label for="region_code" class="col-sm-2 col-form-label"><b>Region Code:</b></label>
+    <div class="col-sm-10">
+      <input type="number" class="form-control" name="region_code" id="region_code" placeholder="Enter region code" required>
+    </div>
+  </div>
+  <div class="form-group row">
+      <label for="region_name" class="col-sm-2 col-form-label"><b>Region Name:</b></label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="region_name" id="region_name" placeholder="Enter region name" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="municipalitiesSelect"><b>Add Municipalities: </b></label>
+    <select multiple="multiple" class="form-control" id="municipalitiesSelect" name="municipalitiesSelect">
+        {% for m in municipalities %}
+            {% if m.state != 'U' %}
+                <option value="{{ m.code }}">{{ m.name }}</option>
+            {% endif %}
+        {% endfor %}
+    </select>
+    <small id="municipalitiesSelectHelp" class="form-text text-muted">Please use "Shift-Click" or "Cmd-Click" for more than one value</small>
+  </div>
+  <div class="form-group row">
+    <div class="col-sm-10">
+      <input type="submit" value="Save" class="btn btn-primary">
+    </div>
+  </div>
+</form>
+</body>
+</html>

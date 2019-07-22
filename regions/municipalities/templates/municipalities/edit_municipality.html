@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <title>Regions</title>
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <span class="navbar-brand mb-0 h1">Municipality Information</span>
+    </nav>
+<br>
+<br>
+<form action="{% url 'municipalities:edit_municipality' municipality.code %}" method="post">
+{% csrf_token %}
+  <div class="form-group row">
+    <label for="municipality_name" class="col-sm-2 col-form-label"><b>Municipality Name:</b></label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="municipality_name" id="municipality_name" placeholder="{{municipality.name}}">
+    </div>
+  </div>
+  <fieldset class="form-group">
+    <div class="row">
+      <legend class="col-form-label col-sm-2 pt-0"><b>Municipality State:</b></legend>
+      <div class="col-sm-10">
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="stateRadio" id="active" value="A" checked>
+          <label class="form-check-label" for="active">
+            Active
+          </label>
+        </div>
+        <div class="form-check disabled">
+          <input class="form-check-input" type="radio" name="stateRadio" id="unactive" value="U">
+          <label class="form-check-label" for="unactive" style="color: #6c757d;">
+            Unactive
+          </label>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+  <div class="form-group row">
+    <div class="col-sm-10">
+      <input type="submit" value="Edit" class="btn btn-primary">
+    </div>
+  </div>
+</body>
+</html>

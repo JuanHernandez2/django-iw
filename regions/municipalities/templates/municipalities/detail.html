@@ -1,0 +1,67 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <title>Regions</title>
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+          <span class="navbar-brand mb-0 h1">
+              {% if municipality %}
+                Municipality Information
+              {% elif region %}
+                Region Information
+              {% endif %}
+          </span>
+    </nav>
+    <br>
+    <br>
+    {% if municipality %}
+        <dl class="row">
+          <dt class="col-sm-3">Municipality name:<dt>
+          <dd class="col-sm-9">{{ municipality.name }}</dd>
+
+          <dt class="col-sm-3">Municipality state</dt>
+          <dd class="col-sm-9">{{ municipality.get_state_display }}</dd>
+        </dl>
+         <div class="btn-group" role="group" aria-label="Options">
+             <a href="{% url 'municipalities:edit_municipality' municipality.code %}" class="btn btn-dark" style="background-color: #343a40;">
+                Edit
+             </a>
+             <form action="{% url 'municipalities:delete_municipality' municipality.code %}" method="post">
+                 {% csrf_token %}
+                 <input type="submit" value="Delete" class="btn btn-dark" style="background-color: #343a40;">
+             </form>
+
+         </div>
+    {% elif region %}
+        <dl class="row">
+          <dt class="col-sm-3">Region name:<dt>
+          <dd class="col-sm-9">{{ region.name }}</dd>
+
+          <dt class="col-sm-3">Region Municipalities:<dt>
+          <dd class="col-sm-9">
+            {% if region.municipalities.all %}
+                <ul>
+                {% for m in region.municipalities.all %}
+                    <li>{{ m.name }}</li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <p>No municipalities are available in this region.</p>
+            {% endif %}
+          </dd>
+        </dl>
+
+        <div class="btn-group" role="group" aria-label="Options">
+             <a href="{% url 'municipalities:edit_region' region.code %}" class="btn btn-dark" style="background-color: #343a40;">
+                Edit
+             </a>
+             <form action="{% url 'municipalities:delete_region' region.code %}" method="post">
+                 {% csrf_token %}
+                 <input type="submit" value="Delete" class="btn btn-dark" style="background-color: #343a40;">
+             </form>
+        </div>
+    {% endif %}
+</body>
